@@ -40,5 +40,5 @@ jobs:
           -Dsonar.projectKey=application \
           -Dsonar.sources=. \
           -Dsonar.host.url=http://20.121.69.96:9000 \
-          -Dsonar.token=sqp_5d59dd5178938fdc1ae7d80f8b12e2ed0477adb4
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
