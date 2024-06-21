@@ -31,14 +31,14 @@ jobs:
     - name: Run SonarQube analysis with debug logging
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+        
       run: |
         sonar-scanner \
           -Dsonar.projectKey=application \
           -Dsonar.sources=. \
-          -Dsonar.host.url=${{ vars.SONAR_HOST_URL }}
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-          -X || true
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+          -X 2>&1 | tee sonar-scanner.log
     - name: Display SonarQube analysis log
       run: cat sonar-scanner.log || echo "No log found"   
           
