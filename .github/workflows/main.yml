@@ -37,4 +37,7 @@ jobs:
           -Dsonar.sources=. \
           -Dsonar.host.url=http://20.121.69.96:9000 \
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-          -X
+          -X | tee sonar-scanner.log
+    - name: Print SonarQube analysis log
+      run: cat sonar-scanner.log      
+          
