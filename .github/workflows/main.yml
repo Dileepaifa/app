@@ -35,6 +35,7 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
+        source $GITHUB_ENV
         sonar-scanner \
           -Dsonar.projectKey=application \
           -Dsonar.sources=. \
