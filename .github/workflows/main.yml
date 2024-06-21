@@ -1,0 +1,43 @@
+name: SonarQube Analysis
+
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+  sonarqube:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install flask
+
+    - name: Install SonarQube Scanner
+      run: |
+        curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
+        unzip sonar-scanner.zip -d $HOME
+        export PATH=$HOME/sonar-scanner-4.6.2.2472-linux/bin:$PATH
+
+    - name: Run SonarQube analysis
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: |
+        sonar-scanner \
+          -Dsonar.projectKey=application \
+          -Dsonar.sources=. \
+          -Dsonar.host.url=http://20.121.69.96:9000 \
+          -Dsonar.token=sqp_5d59dd5178938fdc1ae7d80f8b12e2ed0477adb4
+
