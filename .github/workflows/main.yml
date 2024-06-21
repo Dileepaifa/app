@@ -23,7 +23,12 @@ jobs:
         unzip sonar-scanner.zip
         mv sonar-scanner-4.6.2.2472-linux sonar-scanner
         echo "$(pwd)/sonar-scanner/bin" >> $GITHUB_PATH
-    - name: Run SonarQube analysis
+    - name: Display current directory and contents for debugging
+      run: |
+        pwd
+        ls -la
+        ls -la sonar-scanner/bin
+    - name: Run SonarQube analysis with debug logging
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
@@ -32,4 +37,4 @@ jobs:
           -Dsonar.sources=. \
           -Dsonar.host.url=http://20.121.69.96:9000 \
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-
+          -X
